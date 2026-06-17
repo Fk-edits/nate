@@ -28,7 +28,7 @@
       --radius: 20px;
       --shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.05);
       --shadow-lg: 0 30px 45px -12px rgba(0, 0, 0, 0.08);
-      --nav-bg: rgba(255, 255, 255, 0.8);
+      --nav-bg: rgba(255, 255, 255, 0.9);
       --transition-speed: 0.3s;
     }
 
@@ -40,7 +40,7 @@
       --border: #334155;
       --shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.3);
       --shadow-lg: 0 30px 45px -12px rgba(0, 0, 0, 0.4);
-      --nav-bg: rgba(15, 23, 42, 0.8);
+      --nav-bg: rgba(15, 23, 42, 0.9);
     }
 
     body {
@@ -108,7 +108,6 @@
     .btn span {
       position: relative;
       z-index: 1;
-      transition: transform 0.1s ease;
     }
 
     .btn-primary {
@@ -144,13 +143,12 @@
       will-change: width;
     }
 
-    /* ---------- NAVIGATION ---------- */
+    /* ---------- NAVIGATION (no backdrop-filter) ---------- */
     nav {
       position: sticky;
       top: 0;
       z-index: 100;
       background: var(--nav-bg);
-      backdrop-filter: blur(15px);
       border-bottom: 1px solid var(--border);
       padding: 12px 0;
       transition: background var(--transition-speed);
@@ -291,7 +289,6 @@
         top: 100%;
         left: 0; right: 0;
         background: var(--nav-bg);
-        backdrop-filter: blur(15px);
         flex-direction: column;
         gap: 16px;
         padding: 20px;
@@ -332,45 +329,22 @@
       justify-content: center;
     }
 
-    .blob-layer {
-      position: absolute;
-      inset: 0;
-      z-index: 0;
-      pointer-events: none;
-    }
-
-    .blob-layer::before,
-    .blob-layer::after {
+    /* LIGHTWEIGHT BLOB - simple gradient circle with subtle pulse */
+    .hero-image::after {
       content: "";
       position: absolute;
-      border-radius: 50%;
-      filter: blur(70px);
-      opacity: 0.7;
-    }
-
-    .blob-layer::before {
-      width: 320px; height: 320px;
+      width: 280px; height: 280px;
       top: 50%; left: 50%;
-      background: conic-gradient(from 0deg, #ff0055, #ffdd00, #00ff88, #00aaff, #ff0055);
-      animation: spin 6s linear infinite, scalePulse 3s ease-in-out infinite alternate;
       transform: translate(-50%, -50%);
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(79, 70, 229, 0.25) 0%, transparent 70%);
+      z-index: 0;
+      animation: softPulse 4s ease-in-out infinite;
     }
 
-    .blob-layer::after {
-      width: 260px; height: 260px;
-      top: 55%; left: 45%;
-      background: conic-gradient(from 90deg, #a855f7, #06b6d4, #a855f7);
-      animation: spin 8s linear infinite reverse, scalePulse 4s ease-in-out infinite alternate-reverse;
-      transform: translate(-50%, -50%);
-    }
-
-    @keyframes spin {
-      100% { transform: translate(-50%, -50%) rotate(360deg); }
-    }
-
-    @keyframes scalePulse {
-      0% { transform: translate(-50%, -50%) scale(0.9); }
-      100% { transform: translate(-50%, -50%) scale(1.2); }
+    @keyframes softPulse {
+      0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; }
+      50% { transform: translate(-50%, -50%) scale(1.08); opacity: 0.6; }
     }
 
     .hero-image img {
@@ -379,7 +353,6 @@
       max-width: 100%;
       height: auto;
       filter: drop-shadow(0 15px 30px rgba(0,0,0,0.2));
-      transition: transform 0.1s ease;
     }
 
     .typewriter-cursor {
@@ -429,7 +402,7 @@
     }
 
     .optional-content.expanded {
-      max-height: 10000px; /* large enough */
+      max-height: 10000px;
     }
 
     /* ---------- STEPS / RULES / VIDEOS / METHODS ---------- */
@@ -773,6 +746,10 @@
         width: 100%;
         margin: 8px 0;
       }
+      /* reduce blob size on mobile */
+      .hero-image::after {
+        width: 220px; height: 220px;
+      }
     }
   </style>
 </head>
@@ -832,8 +809,7 @@
           <span data-lang="quiz_btn">ነፃ ጥያቄዎችን ይሞክሩ →</span>
         </a>
       </div>
-      <div class="hero-image" id="hero-image-container">
-        <div class="blob-layer"></div>
+      <div class="hero-image">
         <img src="NATE.PNG" alt="Nate – Online Business Expert" />
       </div>
     </div>
@@ -1104,7 +1080,7 @@
   </button>
 
   <script>
-    // ---------- TRANSLATIONS (Amharic default, English optional) ----------
+    // ---------- TRANSLATIONS ----------
     const translations = {
       am: {
         contact: "አግኙኝ",
@@ -1286,7 +1262,6 @@
           el.textContent = translations[lang][key];
         }
       });
-      // Update typewriter words
       typewriterWords = lang === 'en' ?
         ['Side Income', 'Full‑Time Freedom', 'Financial Control'] :
         ['የጎን ገቢ', 'ሙሉ ጊዜ ነፃነት', 'የፋይናንስ ቁጥጥር'];
@@ -1296,7 +1271,7 @@
       type();
     }
 
-    // ---------- OPTIMIZED PROGRESS BAR ----------
+    // ---------- PROGRESS BAR ----------
     const progressBar = document.getElementById('progress-bar');
     window.addEventListener('scroll', () => {
       requestAnimationFrame(() => {
@@ -1384,7 +1359,7 @@
     });
     counterObserver.observe(studentCountEl);
 
-    // ---------- SCROLL REVEAL (simplified) ----------
+    // ---------- SCROLL REVEAL ----------
     const animatedElements = document.querySelectorAll('[data-animate]');
     const revealObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -1395,28 +1370,6 @@
       });
     }, { threshold: 0.15 });
     animatedElements.forEach(el => revealObserver.observe(el));
-
-    // ---------- PARALLAX ONLY ON DESKTOP (no lag) ----------
-    const heroContainer = document.getElementById('hero-image-container');
-    const heroImg = heroContainer.querySelector('img');
-    const blobLayer = heroContainer.querySelector('.blob-layer');
-    if (window.innerWidth > 768) {
-      heroContainer.addEventListener('mousemove', (e) => {
-        requestAnimationFrame(() => {
-          const rect = heroContainer.getBoundingClientRect();
-          const x = (e.clientX - rect.left) / rect.width - 0.5;
-          const y = (e.clientY - rect.top) / rect.height - 0.5;
-          const moveX = x * 15;
-          const moveY = y * 15;
-          heroImg.style.transform = `translate(${moveX}px, ${moveY}px)`;
-          blobLayer.style.transform = `translate(${moveX * 0.5}px, ${moveY * 0.5}px)`;
-        });
-      });
-      heroContainer.addEventListener('mouseleave', () => {
-        heroImg.style.transform = 'translate(0,0)';
-        blobLayer.style.transform = 'translate(0,0)';
-      });
-    }
 
     // ---------- FAQ ACCORDION ----------
     document.querySelectorAll('.faq-question').forEach(question => {
@@ -1488,7 +1441,7 @@
       }
     });
 
-    // Initialize Amharic (already default)
+    // Initialize Amharic
     updateLanguage('am');
     updateLangButton('am');
   </script>
