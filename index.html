@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="am" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -141,7 +141,7 @@
       background: var(--primary);
       z-index: 101;
       width: 0%;
-      transition: width 0.1s linear;
+      will-change: width;
     }
 
     /* ---------- NAVIGATION ---------- */
@@ -395,15 +395,41 @@
       50%{opacity:0}
     }
 
-    /* ---------- SCROLL ANIMATIONS ---------- */
-    [data-animate] {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
+    /* ---------- OPTIONAL SECTIONS TOGGLE ---------- */
+    .toggle-button {
+      display: block;
+      margin: 40px auto;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 50px;
+      padding: 14px 36px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: var(--shadow);
+      text-align: center;
     }
-    [data-animate].visible {
-      opacity: 1;
-      transform: translateY(0);
+
+    .toggle-button:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .toggle-button i {
+      margin-left: 8px;
+      transition: transform 0.3s;
+    }
+
+    .optional-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .optional-content.expanded {
+      max-height: 10000px; /* large enough */
     }
 
     /* ---------- STEPS / RULES / VIDEOS / METHODS ---------- */
@@ -766,21 +792,16 @@
             <i class="fas fa-check-circle verified-icon"></i>
           </span>
           <a href="https://t.me/Natefams" target="_blank" class="telegram-contact-btn">
-            <i class="fab fa-telegram-plane"></i> <span data-lang="contact">Contact</span>
+            <i class="fab fa-telegram-plane"></i> <span data-lang="contact">አግኙኝ</span>
           </a>
         </div>
       </div>
       <div class="nav-right">
         <ul class="nav-links" id="nav-links">
-          <li><a href="#about"><span data-lang="nav_about">About</span></a></li>
-          <li><a href="#how"><span data-lang="nav_how">How It Works</span></a></li>
-          <li><a href="#methods"><span data-lang="nav_methods">Earning Methods</span></a></li>
-          <li><a href="#rules"><span data-lang="nav_rules">Rules</span></a></li>
-          <li><a href="#faq"><span data-lang="nav_faq">FAQ</span></a></li>
-          <li><a href="#videos"><span data-lang="nav_videos">Videos</span></a></li>
-          <li><a href="#quiz"><span data-lang="nav_quiz">Quiz</span></a></li>
+          <li><a href="#home"><span data-lang="nav_home">መነሻ</span></a></li>
+          <li><a href="#videos"><span data-lang="nav_videos">ቪዲዮዎች</span></a></li>
         </ul>
-        <button class="lang-toggle" id="lang-toggle">🇪🇹 አማ</button>
+        <button class="lang-toggle" id="lang-toggle">EN</button>
         <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
           <i class="fas fa-moon"></i>
         </button>
@@ -791,24 +812,24 @@
     </div>
   </nav>
 
-  <!-- Hero -->
-  <section id="hero">
+  <!-- Hero (Home) -->
+  <section id="home">
     <div class="container hero-grid">
       <div class="hero-text" data-animate>
         <span class="badge" style="background:rgba(79,70,229,0.1); padding:8px 18px; border-radius:50px; color:var(--primary); font-weight:600;">
-          🏆 <span id="student-count">0</span>+ <span data-lang="users">users</span>
+          🏆 <span id="student-count">0</span>+ <span data-lang="users">ተጠቃሚዎች</span>
         </span>
         <h1>
-          <span data-lang="hero_title">Make Your First</span> <span class="text-gradient"><span id="typewriter"></span></span><span class="typewriter-cursor"></span>
+          <span data-lang="hero_title">የመጀመሪያዎን</span> <span class="text-gradient"><span id="typewriter"></span></span><span class="typewriter-cursor"></span>
         </h1>
         <p data-lang="hero_subtitle">
-          I’m Nate – an online business coach who turned a simple app into a full‑time income stream. All the steps, rules, and tutorials are right here.
+          እኔ ናቴ ነኝ – አንድን መተግበሪያ ወደ ሙሉ ጊዜ የኦንላይን ገቢ ምንጭነት የቀየርኩ ኦንላይን ቢዝነስ አሰልጣኝ። ሁሉም እርምጃዎች፣ ደንቦች እና አጋዥ ትምህርቶች እዚህ አሉ።
         </p>
         <a href="https://h5.toptdcloud.com/h5/index.html#/share_hostPage?uid=2901532" target="_blank" class="btn btn-primary">
-          <span data-lang="download_btn">⬇️ Download the App</span>
+          <span data-lang="download_btn">⬇️ መተግበሪያውን ያውርዱ</span>
         </a>
         <a href="#quiz" class="btn btn-outline">
-          <span data-lang="quiz_btn">Take The Free Quiz <i class="fas fa-arrow-right" style="margin-left:8px;"></i></span>
+          <span data-lang="quiz_btn">ነፃ ጥያቄዎችን ይሞክሩ →</span>
         </a>
       </div>
       <div class="hero-image" id="hero-image-container">
@@ -818,184 +839,229 @@
     </div>
   </section>
 
-  <!-- About Nate (New Section) -->
-  <section id="about">
-    <div class="container">
-      <div class="about-grid" data-animate>
-        <div class="about-text">
-          <h3>
-            <span>👋</span> <span data-lang="about_greeting">Hey there! I'm Nate</span>
-          </h3>
-          <p data-lang="about_intro">
-            I'm an online business coach with over 2 years of hands-on experience. I've used many different platforms to build income streams, and now I lead a large community of motivated earners. My mission is simple: guide you step by step so you can achieve the financial freedom you've been looking for.
-          </p>
-          <p data-lang="about_experience">
-            With 2 years in the online business world, I've learned what works and what doesn't. I've tested countless apps and platforms. Now, I'm here to share my proven methods with you. Whether you're a complete beginner or looking to scale up, I'll help you get there.
-          </p>
-          <ul class="about-highlights">
-            <li><i class="fas fa-check-circle"></i> <span data-lang="highlight_exp">2+ Years Experience</span></li>
-            <li><i class="fas fa-check-circle"></i> <span data-lang="highlight_platforms">Many Platforms Tested</span></li>
-            <li><i class="fas fa-check-circle"></i> <span data-lang="highlight_community">Big Community</span></li>
-          </ul>
-        </div>
-        <div class="about-image">
-          <img src="NATE.PNG" alt="Nate" />
-        </div>
-      </div>
-    </div>
-  </section>
+  <!-- Toggle button for optional sections -->
+  <div class="container" style="text-align: center;">
+    <button class="toggle-button" id="toggle-optional-btn">
+      <span data-lang="more_info">ተጨማሪ መረጃ</span> <i class="fas fa-chevron-down"></i>
+    </button>
+  </div>
 
-  <!-- How It Works -->
-  <section id="how">
-    <div class="container">
-      <h2 data-animate><span data-lang="how_title">How It</span> <span class="text-gradient"><span data-lang="how_title2">Works</span></span></h2>
-      <p data-animate style="max-width:600px;" data-lang="how_subtitle">Four simple steps to start earning with my proven app.</p>
-      <div class="steps-grid">
-        <div class="step-card" data-animate>
-          <div class="step-icon"><i class="fas fa-download"></i></div>
-          <h3 data-lang="step1_title">1. Download</h3>
-          <p data-lang="step1_desc">Get the app free from the official store. Works on iOS & Android.</p>
-        </div>
-        <div class="step-card" data-animate>
-          <div class="step-icon"><i class="fas fa-user-plus"></i></div>
-          <h3 data-lang="step2_title">2. Create Profile</h3>
-          <p data-lang="step2_desc">Sign up in under 2 minutes – no technical skills needed.</p>
-        </div>
-        <div class="step-card" data-animate>
-          <div class="step-icon"><i class="fas fa-graduation-cap"></i></div>
-          <h3 data-lang="step3_title">3. Watch Training</h3>
-          <p data-lang="step3_desc">Step‑by‑step video guides inside the app.</p>
-        </div>
-        <div class="step-card" data-animate>
-          <div class="step-icon"><i class="fas fa-coins"></i></div>
-          <h3 data-lang="step4_title">4. Start Earning</h3>
-          <p data-lang="step4_desc">Apply what you learn and see your first income.</p>
+  <!-- Optional content wrapper -->
+  <div class="optional-content" id="optional-content">
+    <!-- About Nate -->
+    <section id="about">
+      <div class="container">
+        <div class="about-grid" data-animate>
+          <div class="about-text">
+            <h3>
+              <span>👋</span> <span data-lang="about_greeting">ሰላም! እኔ ናቴ ነኝ</span>
+            </h3>
+            <p data-lang="about_intro">
+              ከ2 ዓመት በላይ የኦንላይን ንግድ ልምድ ያለኝ አሰልጣኝ ነኝ። የተለያዩ መድረኮችን በመጠቀም የገቢ መንገዶችን ገንብቻለሁ፣ አሁን ደግሞ በርካታ ተከታዮችን የያዘ ትልቅ ማህበረሰብ አለኝ። ተልእኮዬ ቀላል ነው፦ ደረጃ በደረጃ በመምራት የፈለጉትን የገንዘብ ነጻነት እንድታሳኩ መርዳት።
+            </p>
+            <p data-lang="about_experience">
+              በኦንላይን ንግድ ከ2 ዓመታት በላይ ልምድ ስላለኝ፣ የሚሰራውንና የማይሰራውን ተምሬአለሁ። ስፍር ቁጥር የሌላቸው መተግበሪያዎችንና መድረኮችን ሞክሬአለሁ። አሁን የተረጋገጡ ዘዴዎቼን ላካፍላችሁ ነው። ሙሉ ጀማሪም ሁኑ ወይም የበለጠ ማደግ የምትፈልጉ፣ ወደዚያ ለመድረስ እረዳችኋለሁ።
+            </p>
+            <ul class="about-highlights">
+              <li><i class="fas fa-check-circle"></i> <span data-lang="highlight_exp">ከ2 ዓመት በላይ ልምድ</span></li>
+              <li><i class="fas fa-check-circle"></i> <span data-lang="highlight_platforms">ብዙ መድረኮች ተሞክረዋል</span></li>
+              <li><i class="fas fa-check-circle"></i> <span data-lang="highlight_community">ትልቅ ማህበረሰብ</span></li>
+            </ul>
+          </div>
+          <div class="about-image">
+            <img src="NATE.PNG" alt="Nate" />
+          </div>
         </div>
       </div>
-      <div style="text-align:center; margin-top:40px;">
-        <a href="https://h5.toptdcloud.com/h5/index.html#/share_hostPage?uid=2901532" target="_blank" class="btn btn-primary">
-          <span data-lang="download_btn2">⬇️ Click Here to Download the App</span>
-        </a>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Earning Methods -->
-  <section id="methods" style="background: var(--bg);">
-    <div class="container">
-      <h2 data-animate><span data-lang="methods_heading">🚀 How I Earn Daily</span></h2>
-      <p data-animate style="max-width:700px; margin-bottom:40px;" data-lang="methods_intro">
-        This app has been out for over a year. For those who work seriously, it brings real life change! Right now I'm earning between 1,000 and 5,000 Birr per day, and my goal is to reach 10,000 Birr per day.
-      </p>
-      <div class="methods-grid">
-        <div class="method-card" data-animate>
-          <div class="method-icon"><i class="fas fa-microphone"></i></div>
-          <h3 data-lang="method1_title">1. Mic Task</h3>
-          <p data-lang="method1_desc">Spend time on mic and complete tasks to collect your income.</p>
+    <!-- How It Works -->
+    <section id="how">
+      <div class="container">
+        <h2 data-animate><span data-lang="how_title">እንዴት</span> <span class="text-gradient"><span data-lang="how_title2">እንደሚሰራ</span></span></h2>
+        <p data-animate style="max-width:600px;" data-lang="how_subtitle">በተረጋገጠው መተግበሪያዬ ገቢ ለማግኘት አራት ቀላል ደረጃዎች።</p>
+        <div class="steps-grid">
+          <div class="step-card" data-animate>
+            <div class="step-icon"><i class="fas fa-download"></i></div>
+            <h3 data-lang="step1_title">1. አውርድ</h3>
+            <p data-lang="step1_desc">መተግበሪያውን ከኦፊሴላዊ ሱቅ በነፃ ያግኙ። iOS እና Android ላይ ይሰራል።</p>
+          </div>
+          <div class="step-card" data-animate>
+            <div class="step-icon"><i class="fas fa-user-plus"></i></div>
+            <h3 data-lang="step2_title">2. መገለጫ ይፍጠሩ</h3>
+            <p data-lang="step2_desc">ከ2 ደቂቃ ባነሰ ጊዜ ይመዝገቡ – ምንም ቴክኒካል ክህሎት አያስፈልግም።</p>
+          </div>
+          <div class="step-card" data-animate>
+            <div class="step-icon"><i class="fas fa-graduation-cap"></i></div>
+            <h3 data-lang="step3_title">3. ስልጠና ይመልከቱ</h3>
+            <p data-lang="step3_desc">በመተግበሪያው ውስጥ ደረጃ በደረጃ የሚመሩ የቪዲዮ መመሪያዎች።</p>
+          </div>
+          <div class="step-card" data-animate>
+            <div class="step-icon"><i class="fas fa-coins"></i></div>
+            <h3 data-lang="step4_title">4. ገቢ ማግኘት ይጀምሩ</h3>
+            <p data-lang="step4_desc">የተማሩትን ተግባራዊ ያድርጉና የመጀመሪያ ገቢዎን ያግኙ።</p>
+          </div>
         </div>
-        <div class="method-card" data-animate>
-          <div class="method-icon"><i class="fas fa-gamepad"></i></div>
-          <h3 data-lang="method2_title">2. Play Games</h3>
-          <p data-lang="method2_desc">Earn coins by winning various games.</p>
-        </div>
-        <div class="method-card" data-animate>
-          <div class="method-icon"><i class="fas fa-user-friends"></i></div>
-          <h3 data-lang="method3_title">3. Invite People</h3>
-          <p data-lang="method3_desc">When your friends complete Tasks and Exchanges, you get profits.</p>
-        </div>
-        <div class="method-card" data-animate>
-          <div class="method-icon"><i class="fas fa-coins"></i></div>
-          <h3 data-lang="method4_title">4. Become a Coin Seller</h3>
-          <p data-lang="method4_desc">Be a coin agent and stay consistently profitable.</p>
+        <div style="text-align:center; margin-top:40px;">
+          <a href="https://h5.toptdcloud.com/h5/index.html#/share_hostPage?uid=2901532" target="_blank" class="btn btn-primary">
+            <span data-lang="download_btn2">⬇️ መተግበሪያውን ለማውረድ እዚህ ጠቅ ያድርጉ</span>
+          </a>
         </div>
       </div>
-      <div style="text-align:center; margin-top:40px;" data-animate>
-        <p data-lang="methods_closing" style="font-weight:600; color:var(--primary); white-space: pre-line;">
-          💡 My results can be yours too! Start seriously today and change your life. 🔥
-If you're interested and want to work seriously, you can consult me. I'll guide you thoroughly on how to use the app and make money.
+    </section>
+
+    <!-- Earning Methods -->
+    <section id="methods" style="background: var(--bg);">
+      <div class="container">
+        <h2 data-animate><span data-lang="methods_heading">🚀 ዕለታዊ ገቢዬን የማገኝባቸው መንገዶች</span></h2>
+        <p data-animate style="max-width:700px; margin-bottom:40px;" data-lang="methods_intro">
+          ይህ አፕ ከተለቀቀ 1 ዓመት አልፎታል። በቁም ነገር ለሚሰራ ሰው እውነተኛ የህይወት ለውጥ ያመጣል! በአሁኑ ሰዓት በቀን ከ1,000 እስከ 5,000 ብር እየሰራሁበት ነው፤ እቅዴ ደግሞ በቀን 10,000 ብር መድረስ ነው።
         </p>
+        <div class="methods-grid">
+          <div class="method-card" data-animate>
+            <div class="method-icon"><i class="fas fa-microphone"></i></div>
+            <h3 data-lang="method1_title">1. የማይክ ታስክ</h3>
+            <p data-lang="method1_desc">በማይክ ላይ ጊዜ ያሳልፉና ተግባራትን በማጠናቀቅ ገቢዎን ይሰብስቡ።</p>
+          </div>
+          <div class="method-card" data-animate>
+            <div class="method-icon"><i class="fas fa-gamepad"></i></div>
+            <h3 data-lang="method2_title">2. ጨዋታ መጫወት</h3>
+            <p data-lang="method2_desc">የተለያዩ ጨዋታዎችን በማሸነፍ ኮይን ያግኙ።</p>
+          </div>
+          <div class="method-card" data-animate>
+            <div class="method-icon"><i class="fas fa-user-friends"></i></div>
+            <h3 data-lang="method3_title">3. ሰዎችን መጋበዝ</h3>
+            <p data-lang="method3_desc">ጓደኞችዎ Task እና Exchange ሲያደርጉ እርስዎ ትርፍ ያገኛሉ።</p>
+          </div>
+          <div class="method-card" data-animate>
+            <div class="method-icon"><i class="fas fa-coins"></i></div>
+            <h3 data-lang="method4_title">4. የኮይን ሻጭ መሆን</h3>
+            <p data-lang="method4_desc">የኮይን ወኪል በመሆን በቋሚነት ትርፋማ ይሁኑ።</p>
+          </div>
+        </div>
+        <div style="text-align:center; margin-top:40px;" data-animate>
+          <p data-lang="methods_closing" style="font-weight:600; color:var(--primary); white-space: pre-line;">
+            💡 የእኔ ውጤት ያንተም ሊሆን ይችላል! ዛሬውኑ በቁም ነገር ጀምርና ህይወትህን ቀይር። 🔥
+ፍላጎት ካለህ እና በቁም ነገር መስራት ከፈለግህ እኔን ማማከር ትችላለህ። አፑን እንዴት እንደምትጠቀም እና ገንዘብ እንደምትሰራ በደንብ እመራሃለሁ።
+          </p>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- App Rules & Instructions -->
-  <section id="rules">
-    <div class="container">
-      <h2 data-animate><span data-lang="rules_title">App</span> <span class="text-gradient"><span data-lang="rules_title2">Rules & Instructions</span></span></h2>
-      <p data-animate style="margin-bottom:40px;" data-lang="rules_subtitle">Follow these golden rules to stay profitable.</p>
-      <div class="rules-grid">
-        <div class="rule-card" data-animate>
-          <h3><i class="fas fa-shield-alt"></i> <span data-lang="core_rules">Core Rules</span></h3>
-          <ul style="list-style:none; margin-top:16px;">
-            <li><i class="fas fa-check-circle" style="color:var(--accent); margin-right:8px;"></i> <span data-lang="rule1">Never skip training videos</span></li>
-            <li><i class="fas fa-check-circle" style="color:var(--accent); margin-right:8px;"></i> <span data-lang="rule2">Complete 2 tasks daily</span></li>
-            <li><i class="fas fa-check-circle" style="color:var(--accent); margin-right:8px;"></i> <span data-lang="rule3">Use support chat if stuck</span></li>
-          </ul>
-        </div>
-        <div class="rule-card" data-animate>
-          <h3><i class="fas fa-book-open"></i> <span data-lang="how_use">How To Use</span></h3>
-          <ul style="list-style:none; margin-top:16px;">
-            <li><strong data-lang="use1_title">Dashboard:</strong> <span data-lang="use1_desc">Daily tasks appear here</span></li>
-            <li><strong data-lang="use2_title">Academy:</strong> <span data-lang="use2_desc">All training modules</span></li>
-            <li><strong data-lang="use3_title">Wallet:</strong> <span data-lang="use3_desc">Connect payout method</span></li>
-            <li><strong data-lang="use4_title">Community:</strong> <span data-lang="use4_desc">Ask questions, share wins</span></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- FAQ -->
-  <section id="faq">
-    <div class="container">
-      <h2 data-animate><span data-lang="faq_title">Frequently</span> <span class="text-gradient"><span data-lang="faq_title2">Asked Questions</span></span></h2>
-      <p data-animate style="margin-bottom:40px;" data-lang="faq_subtitle">Everything you need to know before you start.</p>
-      <div class="faq-container">
-        <div class="faq-item" data-animate>
-          <div class="faq-question">
-            <span data-lang="faq1_q">Have you ever made money online before?</span>
-            <i class="fas fa-plus"></i>
+    <!-- App Rules & Instructions -->
+    <section id="rules">
+      <div class="container">
+        <h2 data-animate><span data-lang="rules_title">መተግበሪያ</span> <span class="text-gradient"><span data-lang="rules_title2">ደንቦች እና መመሪያዎች</span></span></h2>
+        <p data-animate style="margin-bottom:40px;" data-lang="rules_subtitle">ትርፋማ ሆነው ለመቀጠል እነዚህን ወርቃማ ህጎች ይከተሉ።</p>
+        <div class="rules-grid">
+          <div class="rule-card" data-animate>
+            <h3><i class="fas fa-shield-alt"></i> <span data-lang="core_rules">ዋና ደንቦች</span></h3>
+            <ul style="list-style:none; margin-top:16px;">
+              <li><i class="fas fa-check-circle" style="color:var(--accent); margin-right:8px;"></i> <span data-lang="rule1">የስልጠና ቪዲዮዎችን በፍጹም አይዝለሉ</span></li>
+              <li><i class="fas fa-check-circle" style="color:var(--accent); margin-right:8px;"></i> <span data-lang="rule2">በየቀኑ 2 ተግባራትን ያጠናቅቁ</span></li>
+              <li><i class="fas fa-check-circle" style="color:var(--accent); margin-right:8px;"></i> <span data-lang="rule3">ከተቸገሩ የድጋፍ ቻት ይጠቀሙ</span></li>
+            </ul>
           </div>
-          <div class="faq-answer">
-            <p data-lang="faq1_a">No? Perfect. This system is built for absolute beginners. Yes? Even better – you’ll scale faster with our advanced strategies.</p>
-          </div>
-        </div>
-        <div class="faq-item" data-animate>
-          <div class="faq-question">
-            <span data-lang="faq2_q">How much time do I need per day?</span>
-            <i class="fas fa-plus"></i>
-          </div>
-          <div class="faq-answer">
-            <p data-lang="faq2_a">As little as 30 minutes. The app is designed to fit around your busy schedule – no marathon sessions required.</p>
-          </div>
-        </div>
-        <div class="faq-item" data-animate>
-          <div class="faq-question">
-            <span data-lang="faq3_q">Is there a money‑back guarantee?</span>
-            <i class="fas fa-plus"></i>
-          </div>
-          <div class="faq-answer">
-            <p data-lang="faq3_a">Absolutely. If you follow the training and don’t see results within 60 days, you’ll get a full refund – no questions asked.</p>
-          </div>
-        </div>
-        <div class="faq-item" data-animate>
-          <div class="faq-question">
-            <span data-lang="faq4_q">Do I need any technical skills?</span>
-            <i class="fas fa-plus"></i>
-          </div>
-          <div class="faq-answer">
-            <p data-lang="faq4_a">None. If you can use a smartphone, you can succeed. Everything is point‑and‑click simple.</p>
+          <div class="rule-card" data-animate>
+            <h3><i class="fas fa-book-open"></i> <span data-lang="how_use">እንዴት እንደሚጠቀሙ</span></h3>
+            <ul style="list-style:none; margin-top:16px;">
+              <li><strong data-lang="use1_title">ዳሽቦርድ፦</strong> <span data-lang="use1_desc">ዕለታዊ ተግባራት እዚህ ይታያሉ</span></li>
+              <li><strong data-lang="use2_title">አካዳሚ፦</strong> <span data-lang="use2_desc">ሁሉም የስልጠና ክፍሎች</span></li>
+              <li><strong data-lang="use3_title">ዋሌት፦</strong> <span data-lang="use3_desc">የክፍያ ዘዴ ያገናኙ</span></li>
+              <li><strong data-lang="use4_title">ማህበረሰብ፦</strong> <span data-lang="use4_desc">ጥያቄዎችን ይጠይቁ፣ ድሎችን ያጋሩ</span></li>
+            </ul>
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- YouTube Videos -->
+    <!-- FAQ -->
+    <section id="faq">
+      <div class="container">
+        <h2 data-animate><span data-lang="faq_title">ተደጋጋሚ</span> <span class="text-gradient"><span data-lang="faq_title2">ጥያቄዎች</span></span></h2>
+        <p data-animate style="margin-bottom:40px;" data-lang="faq_subtitle">ከመጀመርዎ በፊት ማወቅ ያለብዎት ነገር ሁሉ።</p>
+        <div class="faq-container">
+          <div class="faq-item" data-animate>
+            <div class="faq-question">
+              <span data-lang="faq1_q">ከዚህ በፊት በኦንላይን ገቢ አግኝተው ያውቃሉ?</span>
+              <i class="fas fa-plus"></i>
+            </div>
+            <div class="faq-answer">
+              <p data-lang="faq1_a">አይ? በጣም ጥሩ። ይህ ስርዓት ለጀማሪዎች የተሰራ ነው። አዎ? እንዲያውም የተሻለ – በላቁ ስልቶቻችን በፍጥነት ያድጋሉ።</p>
+            </div>
+          </div>
+          <div class="faq-item" data-animate>
+            <div class="faq-question">
+              <span data-lang="faq2_q">በየቀኑ ምን ያህል ጊዜ ያስፈልገኛል?</span>
+              <i class="fas fa-plus"></i>
+            </div>
+            <div class="faq-answer">
+              <p data-lang="faq2_a">እስከ 30 ደቂቃ ብቻ። መተግበሪያው በተጨናነቀ መርሃግብርዎ ዙሪያ እንዲገጣጠም ተደርጎ የተሰራ ነው – ረጅም ሰዓታት አያስፈልግም።</p>
+            </div>
+          </div>
+          <div class="faq-item" data-animate>
+            <div class="faq-question">
+              <span data-lang="faq3_q">የገንዘብ መመለሻ ዋስትና አለ?</span>
+              <i class="fas fa-plus"></i>
+            </div>
+            <div class="faq-answer">
+              <p data-lang="faq3_a">በእርግጠኝነት። ስልጠናውን ተከትለው በ60 ቀናት ውስጥ ውጤት ካላዩ፣ ሙሉ ተመላሽ ያገኛሉ – ምንም ጥያቄ አይጠየቅም።</p>
+            </div>
+          </div>
+          <div class="faq-item" data-animate>
+            <div class="faq-question">
+              <span data-lang="faq4_q">ምንም ቴክኒካዊ ክህሎት ያስፈልገኛል?</span>
+              <i class="fas fa-plus"></i>
+            </div>
+            <div class="faq-answer">
+              <p data-lang="faq4_a">ምንም። ስማርትፎን መጠቀም ከቻሉ ስኬታማ መሆን ይችላሉ። ሁሉም ነገር ነጥብ-እና-ጠቅታ ቀላል ነው።</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quiz -->
+    <section id="quiz">
+      <div class="container">
+        <h2 data-animate style="text-align:center;"><span data-lang="quiz_title">ፈጣን</span> <span class="text-gradient"><span data-lang="quiz_title2">ራስን መገምገሚያ</span></span></h2>
+        <div class="quiz-box" data-animate>
+          <form id="quizForm">
+            <div style="margin-bottom:24px;">
+              <p style="font-weight:600; margin-bottom:12px;" data-lang="quiz_q1">1. በኦንላይን ገቢ አግኝተዋል?</p>
+              <div class="option-group">
+                <input type="radio" name="q1" id="q1_yes" value="Yes">
+                <label for="q1_yes" class="option-label" data-lang="quiz_yes">አዎ</label>
+                <input type="radio" name="q1" id="q1_no" value="No">
+                <label for="q1_no" class="option-label" data-lang="quiz_no">እስካሁን የለም</label>
+              </div>
+            </div>
+            <div style="margin-bottom:24px;">
+              <p style="font-weight:600; margin-bottom:12px;" data-lang="quiz_q2">2. በየቀኑ ምን ያህል ጊዜ ማፍሰስ ይችላሉ?</p>
+              <div class="option-group">
+                <input type="radio" name="q2" id="q2_less" value="Less than 30 min">
+                <label for="q2_less" class="option-label">< 30 ደቂቃ</label>
+                <input type="radio" name="q2" id="q2_30" value="30 min - 1 hour">
+                <label for="q2_30" class="option-label">30-60 ደቂቃ</label>
+                <input type="radio" name="q2" id="q2_more" value="1+ hours">
+                <label for="q2_more" class="option-label">ከ1 ሰዓት በላይ</label>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width:100%;"><span data-lang="quiz_submit">ውጤቴን አሳየኝ</span></button>
+          </form>
+          <div id="quizResponse" style="display:none; margin-top:16px; text-align:center; font-weight:600; color:var(--primary);" data-lang="quiz_response">
+            ✅ በጣም ተስማሚ ነዎት! ናቴ በሚቀጥሉት እርምጃዎች ያነጋግርዎታል።
+          </div>
+        </div>
+      </div>
+    </section>
+  </div> <!-- end optional-content -->
+
+  <!-- YouTube Videos (always visible) -->
   <section id="videos" style="background: var(--bg);">
     <div class="container">
-      <h2 data-animate><span data-lang="videos_title">Watch</span> <span class="text-gradient"><span data-lang="videos_title2">Nate’s Videos</span></span></h2>
-      <p data-animate data-lang="videos_subtitle">Get direct advice from my latest YouTube trainings.</p>
+      <h2 data-animate><span data-lang="videos_title">ይመልከቱ</span> <span class="text-gradient"><span data-lang="videos_title2">የናቴ ቪዲዮዎች</span></span></h2>
+      <p data-animate data-lang="videos_subtitle">ከአዳዲስ የዩቲዩብ ስልጠናዎቼ ቀጥተኛ ምክር ያግኙ።</p>
       <div class="video-grid">
         <div class="video-wrapper" data-animate>
           <iframe src="https://www.youtube.com/embed/JU1eVPVWXvI" title="NATE - Introduction" allowfullscreen></iframe>
@@ -1010,61 +1076,26 @@ If you're interested and want to work seriously, you can consult me. I'll guide 
     </div>
   </section>
 
-  <!-- Quiz -->
-  <section id="quiz">
-    <div class="container">
-      <h2 data-animate style="text-align:center;"><span data-lang="quiz_title">Quick</span> <span class="text-gradient"><span data-lang="quiz_title2">Self‑Assessment</span></span></h2>
-      <div class="quiz-box" data-animate>
-        <form id="quizForm">
-          <div style="margin-bottom:24px;">
-            <p style="font-weight:600; margin-bottom:12px;" data-lang="quiz_q1">1. Have you made money online?</p>
-            <div class="option-group">
-              <input type="radio" name="q1" id="q1_yes" value="Yes">
-              <label for="q1_yes" class="option-label" data-lang="quiz_yes">Yes</label>
-              <input type="radio" name="q1" id="q1_no" value="No">
-              <label for="q1_no" class="option-label" data-lang="quiz_no">Not yet</label>
-            </div>
-          </div>
-          <div style="margin-bottom:24px;">
-            <p style="font-weight:600; margin-bottom:12px;" data-lang="quiz_q2">2. How much time can you invest per day?</p>
-            <div class="option-group">
-              <input type="radio" name="q2" id="q2_less" value="Less than 30 min">
-              <label for="q2_less" class="option-label">< 30 min</label>
-              <input type="radio" name="q2" id="q2_30" value="30 min - 1 hour">
-              <label for="q2_30" class="option-label">30-60 min</label>
-              <input type="radio" name="q2" id="q2_more" value="1+ hours">
-              <label for="q2_more" class="option-label">1+ hours</label>
-            </div>
-          </div>
-          <button type="submit" class="btn btn-primary" style="width:100%;"><span data-lang="quiz_submit">See My Results</span></button>
-        </form>
-        <div id="quizResponse" style="display:none; margin-top:16px; text-align:center; font-weight:600; color:var(--primary);" data-lang="quiz_response">
-          ✅ You're a great fit! Nate will reach out with next steps.
-        </div>
-      </div>
-    </div>
-  </section>
-
   <footer>
     <div class="container">
       <div class="footer-powered">
-        <span data-lang="powered_by">Powered by</span>
+        <span data-lang="powered_by">የተጎላበተው በ</span>
         <img src="nexora.png" alt="Nexora" />
         <span style="font-weight:600;">Nexora</span>
         <a href="https://t.me/NexoraET" target="_blank" style="color:var(--primary);">
           <i class="fab fa-telegram-plane"></i> @NexoraET
         </a>
       </div>
-      <p>&copy; 2026 NATE. <span data-lang="rights">All rights reserved. | Privacy | Terms</span></p>
+      <p>&copy; 2026 NATE. <span data-lang="rights">መብቱ በህግ የተጠበቀ ነው። | ግላዊነት | ውሎች</span></p>
     </div>
   </footer>
 
   <!-- Floating testimonial bubbles -->
   <div class="testimonial-bubbles" id="testimonial-bubbles">
-    <div class="testimonial-bubble active" data-lang="testimonial1">“Sarah earned $200 today”</div>
-    <div class="testimonial-bubble" data-lang="testimonial2">“Mike just hit $1,000 this week”</div>
-    <div class="testimonial-bubble" data-lang="testimonial3">“Elena quit her 9‑5!”</div>
-    <div class="testimonial-bubble" data-lang="testimonial4">“David got his first payout”</div>
+    <div class="testimonial-bubble active" data-lang="testimonial1">“ሳራ ዛሬ 200 ዶላር አገኘች”</div>
+    <div class="testimonial-bubble" data-lang="testimonial2">“ማይክ በዚህ ሳምንት 1,000 ዶላር ደረሰ”</div>
+    <div class="testimonial-bubble" data-lang="testimonial3">“ኤሌና 9-5 ስራዋን ተወች!”</div>
+    <div class="testimonial-bubble" data-lang="testimonial4">“ዴቪድ የመጀመሪያ ክፍያውን አገኘ”</div>
   </div>
 
   <!-- Back to Top -->
@@ -1073,17 +1104,97 @@ If you're interested and want to work seriously, you can consult me. I'll guide 
   </button>
 
   <script>
-    // ---------- TRANSLATIONS ----------
+    // ---------- TRANSLATIONS (Amharic default, English optional) ----------
     const translations = {
+      am: {
+        contact: "አግኙኝ",
+        nav_home: "መነሻ",
+        nav_videos: "ቪዲዮዎች",
+        more_info: "ተጨማሪ መረጃ",
+        users: "ተጠቃሚዎች",
+        hero_title: "የመጀመሪያዎን",
+        hero_subtitle: "እኔ ናቴ ነኝ – አንድን መተግበሪያ ወደ ሙሉ ጊዜ የኦንላይን ገቢ ምንጭነት የቀየርኩ ኦንላይን ቢዝነስ አሰልጣኝ። ሁሉም እርምጃዎች፣ ደንቦች እና አጋዥ ትምህርቶች እዚህ አሉ።",
+        download_btn: "⬇️ መተግበሪያውን ያውርዱ",
+        quiz_btn: "ነፃ ጥያቄዎችን ይሞክሩ →",
+        about_greeting: "ሰላም! እኔ ናቴ ነኝ",
+        about_intro: "ከ2 ዓመት በላይ የኦንላይን ንግድ ልምድ ያለኝ አሰልጣኝ ነኝ። የተለያዩ መድረኮችን በመጠቀም የገቢ መንገዶችን ገንብቻለሁ፣ አሁን ደግሞ በርካታ ተከታዮችን የያዘ ትልቅ ማህበረሰብ አለኝ። ተልእኮዬ ቀላል ነው፦ ደረጃ በደረጃ በመምራት የፈለጉትን የገንዘብ ነጻነት እንድታሳኩ መርዳት።",
+        about_experience: "በኦንላይን ንግድ ከ2 ዓመታት በላይ ልምድ ስላለኝ፣ የሚሰራውንና የማይሰራውን ተምሬአለሁ። ስፍር ቁጥር የሌላቸው መተግበሪያዎችንና መድረኮችን ሞክሬአለሁ። አሁን የተረጋገጡ ዘዴዎቼን ላካፍላችሁ ነው። ሙሉ ጀማሪም ሁኑ ወይም የበለጠ ማደግ የምትፈልጉ፣ ወደዚያ ለመድረስ እረዳችኋለሁ።",
+        highlight_exp: "ከ2 ዓመት በላይ ልምድ",
+        highlight_platforms: "ብዙ መድረኮች ተሞክረዋል",
+        highlight_community: "ትልቅ ማህበረሰብ",
+        how_title: "እንዴት",
+        how_title2: "እንደሚሰራ",
+        how_subtitle: "በተረጋገጠው መተግበሪያዬ ገቢ ለማግኘት አራት ቀላል ደረጃዎች።",
+        step1_title: "1. አውርድ",
+        step1_desc: "መተግበሪያውን ከኦፊሴላዊ ሱቅ በነፃ ያግኙ። iOS እና Android ላይ ይሰራል።",
+        step2_title: "2. መገለጫ ይፍጠሩ",
+        step2_desc: "ከ2 ደቂቃ ባነሰ ጊዜ ይመዝገቡ – ምንም ቴክኒካል ክህሎት አያስፈልግም።",
+        step3_title: "3. ስልጠና ይመልከቱ",
+        step3_desc: "በመተግበሪያው ውስጥ ደረጃ በደረጃ የሚመሩ የቪዲዮ መመሪያዎች።",
+        step4_title: "4. ገቢ ማግኘት ይጀምሩ",
+        step4_desc: "የተማሩትን ተግባራዊ ያድርጉና የመጀመሪያ ገቢዎን ያግኙ።",
+        download_btn2: "⬇️ መተግበሪያውን ለማውረድ እዚህ ጠቅ ያድርጉ",
+        methods_heading: "🚀 ዕለታዊ ገቢዬን የማገኝባቸው መንገዶች",
+        methods_intro: "ይህ አፕ ከተለቀቀ 1 ዓመት አልፎታል። በቁም ነገር ለሚሰራ ሰው እውነተኛ የህይወት ለውጥ ያመጣል! በአሁኑ ሰዓት በቀን ከ1,000 እስከ 5,000 ብር እየሰራሁበት ነው፤ እቅዴ ደግሞ በቀን 10,000 ብር መድረስ ነው።",
+        method1_title: "1. የማይክ ታስክ",
+        method1_desc: "በማይክ ላይ ጊዜ ያሳልፉና ተግባራትን በማጠናቀቅ ገቢዎን ይሰብስቡ።",
+        method2_title: "2. ጨዋታ መጫወት",
+        method2_desc: "የተለያዩ ጨዋታዎችን በማሸነፍ ኮይን ያግኙ።",
+        method3_title: "3. ሰዎችን መጋበዝ",
+        method3_desc: "ጓደኞችዎ Task እና Exchange ሲያደርጉ እርስዎ ትርፍ ያገኛሉ።",
+        method4_title: "4. የኮይን ሻጭ መሆን",
+        method4_desc: "የኮይን ወኪል በመሆን በቋሚነት ትርፋማ ይሁኑ።",
+        methods_closing: "💡 የእኔ ውጤት ያንተም ሊሆን ይችላል! ዛሬውኑ በቁም ነገር ጀምርና ህይወትህን ቀይር። 🔥\nፍላጎት ካለህ እና በቁም ነገር መስራት ከፈለግህ እኔን ማማከር ትችላለህ። አፑን እንዴት እንደምትጠቀም እና ገንዘብ እንደምትሰራ በደንብ እመራሃለሁ።",
+        rules_title: "መተግበሪያ",
+        rules_title2: "ደንቦች እና መመሪያዎች",
+        rules_subtitle: "ትርፋማ ሆነው ለመቀጠል እነዚህን ወርቃማ ህጎች ይከተሉ።",
+        core_rules: "ዋና ደንቦች",
+        rule1: "የስልጠና ቪዲዮዎችን በፍጹም አይዝለሉ",
+        rule2: "በየቀኑ 2 ተግባራትን ያጠናቅቁ",
+        rule3: "ከተቸገሩ የድጋፍ ቻት ይጠቀሙ",
+        how_use: "እንዴት እንደሚጠቀሙ",
+        use1_title: "ዳሽቦርድ፦",
+        use1_desc: "ዕለታዊ ተግባራት እዚህ ይታያሉ",
+        use2_title: "አካዳሚ፦",
+        use2_desc: "ሁሉም የስልጠና ክፍሎች",
+        use3_title: "ዋሌት፦",
+        use3_desc: "የክፍያ ዘዴ ያገናኙ",
+        use4_title: "ማህበረሰብ፦",
+        use4_desc: "ጥያቄዎችን ይጠይቁ፣ ድሎችን ያጋሩ",
+        faq_title: "ተደጋጋሚ",
+        faq_title2: "ጥያቄዎች",
+        faq_subtitle: "ከመጀመርዎ በፊት ማወቅ ያለብዎት ነገር ሁሉ።",
+        faq1_q: "ከዚህ በፊት በኦንላይን ገቢ አግኝተው ያውቃሉ?",
+        faq1_a: "አይ? በጣም ጥሩ። ይህ ስርዓት ለጀማሪዎች የተሰራ ነው። አዎ? እንዲያውም የተሻለ – በላቁ ስልቶቻችን በፍጥነት ያድጋሉ።",
+        faq2_q: "በየቀኑ ምን ያህል ጊዜ ያስፈልገኛል?",
+        faq2_a: "እስከ 30 ደቂቃ ብቻ። መተግበሪያው በተጨናነቀ መርሃግብርዎ ዙሪያ እንዲገጣጠም ተደርጎ የተሰራ ነው – ረጅም ሰዓታት አያስፈልግም።",
+        faq3_q: "የገንዘብ መመለሻ ዋስትና አለ?",
+        faq3_a: "በእርግጠኝነት። ስልጠናውን ተከትለው በ60 ቀናት ውስጥ ውጤት ካላዩ፣ ሙሉ ተመላሽ ያገኛሉ – ምንም ጥያቄ አይጠየቅም።",
+        faq4_q: "ምንም ቴክኒካዊ ክህሎት ያስፈልገኛል?",
+        faq4_a: "ምንም። ስማርትፎን መጠቀም ከቻሉ ስኬታማ መሆን ይችላሉ። ሁሉም ነገር ነጥብ-እና-ጠቅታ ቀላል ነው።",
+        videos_title: "ይመልከቱ",
+        videos_title2: "የናቴ ቪዲዮዎች",
+        videos_subtitle: "ከአዳዲስ የዩቲዩብ ስልጠናዎቼ ቀጥተኛ ምክር ያግኙ።",
+        quiz_title: "ፈጣን",
+        quiz_title2: "ራስን መገምገሚያ",
+        quiz_q1: "1. በኦንላይን ገቢ አግኝተዋል?",
+        quiz_yes: "አዎ",
+        quiz_no: "እስካሁን የለም",
+        quiz_q2: "2. በየቀኑ ምን ያህል ጊዜ ማፍሰስ ይችላሉ?",
+        quiz_submit: "ውጤቴን አሳየኝ",
+        quiz_response: "✅ በጣም ተስማሚ ነዎት! ናቴ በሚቀጥሉት እርምጃዎች ያነጋግርዎታል።",
+        testimonial1: "“ሳራ ዛሬ 200 ዶላር አገኘች”",
+        testimonial2: "“ማይክ በዚህ ሳምንት 1,000 ዶላር ደረሰ”",
+        testimonial3: "“ኤሌና 9-5 ስራዋን ተወች!”",
+        testimonial4: "“ዴቪድ የመጀመሪያ ክፍያውን አገኘ”",
+        powered_by: "የተጎላበተው በ",
+        rights: "መብቱ በህግ የተጠበቀ ነው። | ግላዊነት | ውሎች"
+      },
       en: {
         contact: "Contact",
-        nav_about: "About",
-        nav_how: "How It Works",
-        nav_methods: "Earning Methods",
-        nav_rules: "Rules",
-        nav_faq: "FAQ",
+        nav_home: "Home",
         nav_videos: "Videos",
-        nav_quiz: "Quiz",
+        more_info: "More Info",
         users: "users",
         hero_title: "Make Your First",
         hero_subtitle: "I’m Nate – an online business coach who turned a simple app into a full‑time income stream. All the steps, rules, and tutorials are right here.",
@@ -1162,98 +1273,10 @@ If you're interested and want to work seriously, you can consult me. I'll guide 
         testimonial4: "“David got his first payout”",
         powered_by: "Powered by",
         rights: "All rights reserved. | Privacy | Terms"
-      },
-      am: {
-        contact: "አግኙን",
-        nav_about: "ስለ እኔ",
-        nav_how: "አሰራሩ",
-        nav_methods: "የማግኛ ዘዴዎች",
-        nav_rules: "ደንቦች",
-        nav_faq: "ተደጋጋሚ ጥያቄዎች",
-        nav_videos: "ቪዲዮዎች",
-        nav_quiz: "ጥያቄዎች",
-        users: "ተጠቃሚዎች",
-        hero_title: "የመጀመሪያዎን",
-        hero_subtitle: "እኔ ናቴ ነኝ – አንድን መተግበሪያ ወደ ሙሉ ጊዜ የኦንላይን ገቢ ምንጭነት የቀየርኩ ኦንላይን ቢዝነስ አሰልጣኝ። ሁሉም እርምጃዎች፣ ደንቦች እና አጋዥ ትምህርቶች እዚህ አሉ።",
-        download_btn: "⬇️ መተግበሪያውን ያውርዱ",
-        quiz_btn: "ነፃ ጥያቄዎችን ይሞክሩ →",
-        about_greeting: "ሰላም! እኔ ናቴ እባላለሁ",
-        about_intro: "ከ2 አመት በላይ የኦንላይን ቢዝነስ ልምድ ያለኝ አሰልጣኝ ነኝ። የተለያዩ መንገዶችን ተጠቅሜ ገቢ መስሪያ መንገዶችን ገንብቻለሁ፣ አሁን ደግሞ ትልቅ ማህበረሰብን እመራለሁ። ዓላማዬ ቀላል ነው፦ ደረጃ በደረጃ በመምራት የፈለጉትን የፋይናንስ ነፃነት እንድታገኙ ማገዝ ነው።",
-        about_experience: "በኦንላይን ቢዝነስ ከ2 አመታት በላይ ልምድ ያለኝ በመሆኔ፣ ምን እንደሚሰራ እና ምን እንደማይሰራ ተምሬያለሁ። ስፍር ቁጥር የሌላቸው አፖችን እና መንገዶችን ሞክሪያለሁ። አሁን ደግሞ የተረጋገጡ ስልቶቼን ላካፍላችሁ ነው። ሙሉ ጀማሪም ሁኑ ወይም የበለጠ ማደግ የምትፈልጉ፣ እዚያ ለመድረስ እረዳችኋለሁ።",
-        highlight_exp: "ከ2 አመት በላይ ልምድ",
-        highlight_platforms: "ብዙ መድረኮች ተሞክረዋል",
-        highlight_community: "ትልቅ ማህበረሰብ",
-        how_title: "እንዴት",
-        how_title2: "እንደሚሰራ",
-        how_subtitle: "በተረጋገጠው መተግበሪያዬ ገቢ ለማግኘት አራት ቀላል ደረጃዎች።",
-        step1_title: "1. አውርድ",
-        step1_desc: "መተግበሪያውን ከኦፊሴላዊ ሱቅ በነፃ ያግኙ። iOS እና Android ላይ ይሰራል።",
-        step2_title: "2. መገለጫ ይፍጠሩ",
-        step2_desc: "ከ2 ደቂቃ ባነሰ ጊዜ ይመዝገቡ – ምንም ቴክኒካል ክህሎት አያስፈልግም።",
-        step3_title: "3. ስልጠና ይመልከቱ",
-        step3_desc: "በመተግበሪያው ውስጥ ደረጃ በደረጃ የሚመሩ የቪዲዮ መመሪያዎች።",
-        step4_title: "4. ገቢ ማግኘት ይጀምሩ",
-        step4_desc: "የተማሩትን ተግባራዊ ያድርጉና የመጀመሪያ ገቢዎን ያግኙ።",
-        download_btn2: "⬇️ መተግበሪያውን ለማውረድ እዚህ ጠቅ ያድርጉ",
-        methods_heading: "🚀 ዕለታዊ ገቢዬን የማገኝባቸው መንገዶች",
-        methods_intro: "ይህ አፕ ከተለቀቀ 1 አመት አልፎታል። በቁም ነገር ለሚሰራ ሰው እውነተኛ የህይወት ለውጥ ያመጣል! እኔ በአሁኑ ሰዓት በቀን ከ1,000 እስከ 5,000 ብር እየሰራሁበት ነው፤ እቅዴ ደግሞ በቀን 10,000 ብር መድረስ ነው።",
-        method1_title: "1. የማይክ ታስክ (Mic Task)",
-        method1_desc: "በማይክ ላይ ሰዓታትን በማሳለፍና ታስኮችን በመጨረስ ገቢዎን ይሰብስቡ።",
-        method2_title: "2. ጌም መጫወት",
-        method2_desc: "የተለያዩ ጌሞችን በማሸነፍ ኮይን ያግኙ።",
-        method3_title: "3. ሰዎችን መጋበዝ",
-        method3_desc: "ጓደኞችዎ Task እና Exchange ሲያደርጉ እርስዎ ትርፍ ያገኛሉ።",
-        method4_title: "4. የኮይን ሻጭ (Coin Seller) መሆን",
-        method4_desc: "የኮይን ወኪል በመሆን በቋሚነት ትርፋማ ይሁኑ።",
-        methods_closing: "💡 የእኔ ውጤት ያንተም ሊሆን ይችላል! ዛሬውኑ በቁም ነገር ጀምርና ህይወትህን ቀይር። 🔥\nፍላጎቱ ካላችሁ እና በቁም ነገር ለመስራት ካሰባችሁ እኔን ማማከር ትችላላችሁ። አፑን እንዴት እንደምትጠቀሙበት እና ገንዘብ መስራት እንደምትችሉ በደንብ እመራችኋለሁ።",
-        rules_title: "መተግበሪያ",
-        rules_title2: "ደንቦች እና መመሪያዎች",
-        rules_subtitle: "ትርፋማ ሆነው ለመቀጠል እነዚህን ወርቃማ ህጎች ይከተሉ።",
-        core_rules: "ዋና ደንቦች",
-        rule1: "የስልጠና ቪዲዮዎችን በፍጹም አይዝለሉ",
-        rule2: "በየቀኑ 2 ተግባራትን ያጠናቅቁ",
-        rule3: "ከተቸገሩ የድጋፍ ቻት ይጠቀሙ",
-        how_use: "አጠቃቀሙ",
-        use1_title: "ዳሽቦርድ:",
-        use1_desc: "ዕለታዊ ተግባራት እዚህ ይታያሉ",
-        use2_title: "አካዳሚ:",
-        use2_desc: "ሁሉም የስልጠና ክፍሎች",
-        use3_title: "ዋሌት:",
-        use3_desc: "የክፍያ ዘዴ ያገናኙ",
-        use4_title: "ማህበረሰብ:",
-        use4_desc: "ጥያቄዎችን ይጠይቁ፣ ድሎችን ያጋሩ",
-        faq_title: "ተደጋጋሚ",
-        faq_title2: "ጥያቄዎች",
-        faq_subtitle: "ከመጀመርዎ በፊት ማወቅ ያለብዎት ነገር ሁሉ።",
-        faq1_q: "ከዚህ በፊት በኦንላይን ገቢ አግኝተው ያውቃሉ?",
-        faq1_a: "አይ? በጣም ጥሩ። ይህ ስርዓት ለጀማሪዎች የተሰራ ነው። አዎ? እንዲያውም የተሻለ – በተሻሻሉ ስልቶቻችን በፍጥነት ያድጋሉ።",
-        faq2_q: "በየቀኑ ምን ያህል ጊዜ ያስፈልገኛል?",
-        faq2_a: "እስከ 30 ደቂቃ ብቻ። መተግበሪያው በተጨናነቀ መርሃግብርዎ ዙሪያ እንዲገጣጠም ተደርጎ የተሰራ ነው – ረጅም ሰዓታት አያስፈልግም።",
-        faq3_q: "የገንዘብ መመለሻ ዋስትና አለ?",
-        faq3_a: "በእርግጠኝነት። ስልጠናውን ተከትለው በ60 ቀናት ውስጥ ውጤት ካላዩ፣ ሙሉ ተመላሽ ያገኛሉ – ምንም ጥያቄ አይጠየቅም።",
-        faq4_q: "ምንም ቴክኒካዊ ክህሎት ያስፈልገኛል?",
-        faq4_a: "ምንም። ስማርትፎን መጠቀም ከቻሉ ስኬታማ መሆን ይችላሉ። ሁሉም ነገር ነጥብ-እና-ጠቅታ ቀላል ነው።",
-        videos_title: "ይመልከቱ",
-        videos_title2: "የናቴ ቪዲዮዎች",
-        videos_subtitle: "ከአዳዲስ የዩቲዩብ ስልጠናዎቼ ቀጥተኛ ምክር ያግኙ።",
-        quiz_title: "ፈጣን",
-        quiz_title2: "ራስን መገምገሚያ",
-        quiz_q1: "1. በኦንላይን ገቢ አግኝተዋል?",
-        quiz_yes: "አዎ",
-        quiz_no: "እስካሁን የለም",
-        quiz_q2: "2. በየቀኑ ምን ያህል ጊዜ ማፍሰስ ይችላሉ?",
-        quiz_submit: "ውጤቴን አሳየኝ",
-        quiz_response: "✅ በጣም ተስማሚ ነዎት! ናቴ በሚቀጥሉት እርምጃዎች ያነጋግርዎታል።",
-        testimonial1: "“ሳራ ዛሬ 200 ዶላር አገኘች”",
-        testimonial2: "“ማይክ በዚህ ሳምንት 1,000 ዶላር ደረሰ”",
-        testimonial3: "“ኤሌና 9-5 ስራዋን ተወች!”",
-        testimonial4: "“ዴቪድ የመጀመሪያ ክፍያውን አገኘ”",
-        powered_by: "የተጎላበተው በ",
-        rights: "መብቱ በህግ የተጠበቀ ነው። | ግላዊነት | ውሎች"
       }
     };
 
-    let currentLang = 'en';
+    let currentLang = 'am'; // Amharic default
 
     function updateLanguage(lang) {
       currentLang = lang;
@@ -1263,24 +1286,25 @@ If you're interested and want to work seriously, you can consult me. I'll guide 
           el.textContent = translations[lang][key];
         }
       });
+      // Update typewriter words
       typewriterWords = lang === 'en' ?
         ['Side Income', 'Full‑Time Freedom', 'Financial Control'] :
-        ['የጎን ገቢ', 'የሙሉ ጊዜ ነፃነት', 'የፋይናንስ ቁጥጥር'];
+        ['የጎን ገቢ', 'ሙሉ ጊዜ ነፃነት', 'የፋይናንስ ቁጥጥር'];
       typewriterEl.textContent = '';
-      wordIndex = 0;
-      charIndex = 0;
-      isDeleting = false;
+      wordIndex = 0; charIndex = 0; isDeleting = false;
       clearTimeout(typeTimeout);
       type();
     }
 
-    // ---------- PROGRESS BAR ----------
+    // ---------- OPTIMIZED PROGRESS BAR ----------
     const progressBar = document.getElementById('progress-bar');
     window.addEventListener('scroll', () => {
-      const scrollTop = window.scrollY;
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const scrollPercent = (scrollTop / docHeight) * 100;
-      progressBar.style.width = scrollPercent + '%';
+      requestAnimationFrame(() => {
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const scrollPercent = (scrollTop / docHeight) * 100;
+        progressBar.style.width = scrollPercent + '%';
+      });
     });
 
     // ---------- DARK/LIGHT TOGGLE ----------
@@ -1312,7 +1336,7 @@ If you're interested and want to work seriously, you can consult me. I'll guide 
     });
 
     // ---------- TYPEWRITER ----------
-    let typewriterWords = ['Side Income', 'Full‑Time Freedom', 'Financial Control'];
+    let typewriterWords = ['የጎን ገቢ', 'ሙሉ ጊዜ ነፃነት', 'የፋይናንስ ቁጥጥር'];
     let wordIndex = 0, charIndex = 0, isDeleting = false;
     const typewriterEl = document.getElementById('typewriter');
     let typeTimeout;
@@ -1360,7 +1384,7 @@ If you're interested and want to work seriously, you can consult me. I'll guide 
     });
     counterObserver.observe(studentCountEl);
 
-    // ---------- SCROLL REVEAL ----------
+    // ---------- SCROLL REVEAL (simplified) ----------
     const animatedElements = document.querySelectorAll('[data-animate]');
     const revealObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -1372,38 +1396,27 @@ If you're interested and want to work seriously, you can consult me. I'll guide 
     }, { threshold: 0.15 });
     animatedElements.forEach(el => revealObserver.observe(el));
 
-    // ---------- PARALLAX ----------
+    // ---------- PARALLAX ONLY ON DESKTOP (no lag) ----------
     const heroContainer = document.getElementById('hero-image-container');
     const heroImg = heroContainer.querySelector('img');
     const blobLayer = heroContainer.querySelector('.blob-layer');
-    heroContainer.addEventListener('mousemove', (e) => {
-      const rect = heroContainer.getBoundingClientRect();
-      const x = (e.clientX - rect.left) / rect.width - 0.5;
-      const y = (e.clientY - rect.top) / rect.height - 0.5;
-      const moveX = x * 20;
-      const moveY = y * 20;
-      heroImg.style.transform = `translate(${moveX}px, ${moveY}px)`;
-      blobLayer.style.transform = `translate(${moveX * 0.6}px, ${moveY * 0.6}px)`;
-    });
-    heroContainer.addEventListener('mouseleave', () => {
-      heroImg.style.transform = 'translate(0,0)';
-      blobLayer.style.transform = 'translate(0,0)';
-    });
-
-    // ---------- MAGNETIC BUTTONS ----------
-    document.querySelectorAll('.btn').forEach(btn => {
-      btn.addEventListener('mousemove', (e) => {
-        const rect = btn.getBoundingClientRect();
-        const x = (e.clientX - rect.left) / rect.width - 0.5;
-        const y = (e.clientY - rect.top) / rect.height - 0.5;
-        const span = btn.querySelector('span');
-        if (span) span.style.transform = `translate(${x * 8}px, ${y * 8}px)`;
+    if (window.innerWidth > 768) {
+      heroContainer.addEventListener('mousemove', (e) => {
+        requestAnimationFrame(() => {
+          const rect = heroContainer.getBoundingClientRect();
+          const x = (e.clientX - rect.left) / rect.width - 0.5;
+          const y = (e.clientY - rect.top) / rect.height - 0.5;
+          const moveX = x * 15;
+          const moveY = y * 15;
+          heroImg.style.transform = `translate(${moveX}px, ${moveY}px)`;
+          blobLayer.style.transform = `translate(${moveX * 0.5}px, ${moveY * 0.5}px)`;
+        });
       });
-      btn.addEventListener('mouseleave', () => {
-        const span = btn.querySelector('span');
-        if (span) span.style.transform = 'translate(0,0)';
+      heroContainer.addEventListener('mouseleave', () => {
+        heroImg.style.transform = 'translate(0,0)';
+        blobLayer.style.transform = 'translate(0,0)';
       });
-    });
+    }
 
     // ---------- FAQ ACCORDION ----------
     document.querySelectorAll('.faq-question').forEach(question => {
@@ -1448,21 +1461,36 @@ If you're interested and want to work seriously, you can consult me. I'll guide 
     // ---------- LANGUAGE TOGGLE ----------
     const langToggle = document.getElementById('lang-toggle');
     function updateLangButton(lang) {
-      langToggle.innerHTML = lang === 'en' ? '🇪🇹 አማ' : '🇺🇸 EN';
+      langToggle.innerHTML = lang === 'am' ? 'EN' : '🇪🇹 አማ';
     }
     langToggle.addEventListener('click', () => {
-      if (currentLang === 'en') {
-        updateLanguage('am');
-        updateLangButton('am');
-      } else {
+      if (currentLang === 'am') {
         updateLanguage('en');
         updateLangButton('en');
+      } else {
+        updateLanguage('am');
+        updateLangButton('am');
       }
     });
 
-    // Initialize
-    updateLanguage('en');
-    updateLangButton('en');
+    // ---------- OPTIONAL CONTENT TOGGLE ----------
+    const toggleBtn = document.getElementById('toggle-optional-btn');
+    const optionalContent = document.getElementById('optional-content');
+    const toggleIcon = toggleBtn.querySelector('i');
+    toggleBtn.addEventListener('click', () => {
+      optionalContent.classList.toggle('expanded');
+      if (optionalContent.classList.contains('expanded')) {
+        toggleIcon.classList.remove('fa-chevron-down');
+        toggleIcon.classList.add('fa-chevron-up');
+      } else {
+        toggleIcon.classList.remove('fa-chevron-up');
+        toggleIcon.classList.add('fa-chevron-down');
+      }
+    });
+
+    // Initialize Amharic (already default)
+    updateLanguage('am');
+    updateLangButton('am');
   </script>
 </body>
 </html>
