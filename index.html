@@ -1425,7 +1425,7 @@
       }
     });
 
-    // ---------- OPTIONAL CONTENT TOGGLE ----------
+    // ---------- OPTIONAL CONTENT TOGGLE (with auto-scroll) ----------
     const toggleBtn = document.getElementById('toggle-optional-btn');
     const optionalContent = document.getElementById('optional-content');
     const toggleIcon = toggleBtn.querySelector('i');
@@ -1434,6 +1434,10 @@
       if (optionalContent.classList.contains('expanded')) {
         toggleIcon.classList.remove('fa-chevron-down');
         toggleIcon.classList.add('fa-chevron-up');
+        // Smooth scroll to the optional content after a tiny delay to let the transition start
+        setTimeout(() => {
+          optionalContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 100);
       } else {
         toggleIcon.classList.remove('fa-chevron-up');
         toggleIcon.classList.add('fa-chevron-down');
