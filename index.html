@@ -404,6 +404,29 @@
       max-height: 10000px;
     }
 
+    /* Close button inside optional content */
+    .close-more-btn {
+      display: block;
+      width: fit-content;
+      margin: 0 auto 40px auto;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 50px;
+      padding: 12px 30px;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+
+    .close-more-btn:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
     /* ---------- STEPS / RULES / VIDEOS / METHODS ---------- */
     .steps-grid, .methods-grid {
       display: grid;
@@ -801,7 +824,7 @@
           እኔ ናቴ ነኝ – አንድን መተግበሪያ ወደ ሙሉ ጊዜ የኦንላይን ገቢ ምንጭነት የቀየርኩ ኦንላይን ቢዝነስ አሰልጣኝ። ሁሉም እርምጃዎች፣ ደንቦች እና አጋዥ ትምህርቶች እዚህ አሉ።
         </p>
 
-        <!-- "More Info" toggle button moved here, above the CTA buttons -->
+        <!-- "More Info" toggle button -->
         <button class="toggle-button" id="toggle-optional-btn" style="margin: 20px 0; display: inline-block;">
           <span data-lang="more_info">ተጨማሪ መረጃ</span> <i class="fas fa-chevron-down"></i>
         </button>
@@ -823,6 +846,13 @@
 
   <!-- Optional content wrapper -->
   <div class="optional-content" id="optional-content">
+    <!-- Close / See Less button at the top -->
+    <div class="container" style="text-align: center; padding: 30px 0 0 0;">
+      <button class="close-more-btn" id="close-more-btn">
+        <span data-lang="close_more">🔽 ዝጋ (Close)</span>
+      </button>
+    </div>
+
     <!-- About Nate -->
     <section id="about">
       <div class="container">
@@ -1039,13 +1069,13 @@
       <p data-animate data-lang="videos_subtitle">ከአዳዲስ የዩቲዩብ ስልጠናዎቼ ቀጥተኛ ምክር ያግኙ።</p>
       <div class="video-grid">
         <div class="video-wrapper" data-animate>
-          <iframe src="https://www.youtube.com/embed/tqjQgFGNVEA" title="NATE - Video 1" allowfullscreen></iframe>
+          <iframe src="https://www.youtube.com/embed/AbvKOldFlSg" title="NATE - Video 3" allowfullscreen></iframe>
         </div>
         <div class="video-wrapper" data-animate>
           <iframe src="https://www.youtube.com/embed/BHQs_tbL2Kk" title="NATE - Video 2" allowfullscreen></iframe>
         </div>
         <div class="video-wrapper" data-animate>
-          <iframe src="https://www.youtube.com/embed/AbvKOldFlSg" title="NATE - Video 3" allowfullscreen></iframe>
+          <iframe src="https://www.youtube.com/embed/tqjQgFGNVEA" title="NATE - Video 1" allowfullscreen></iframe>
         </div>
       </div>
     </div>
@@ -1086,6 +1116,7 @@
         nav_home: "መነሻ",
         nav_videos: "ቪዲዮዎች",
         more_info: "ተጨማሪ መረጃ",
+        close_more: "🔽 ዝጋ (Close)",
         users: "ተጠቃሚዎች",
         hero_title: "የመጀመሪያዎን",
         hero_subtitle: "እኔ ናቴ ነኝ – አንድን መተግበሪያ ወደ ሙሉ ጊዜ የኦንላይን ገቢ ምንጭነት የቀየርኩ ኦንላይን ቢዝነስ አሰልጣኝ። ሁሉም እርምጃዎች፣ ደንቦች እና አጋዥ ትምህርቶች እዚህ አሉ።",
@@ -1159,8 +1190,8 @@
         quiz_submit: "ውጤቴን አሳየኝ",
         quiz_response: "✅ በጣም ተስማሚ ነዎት! ናቴ በሚቀጥሉት እርምጃዎች ያነጋግርዎታል።",
         testimonial1: "“ሳራ ዛሬ 200 ዶላር አገኘች”",
-        testimonial2: "“ማይክ በዚህ ሳምንት 100 ዶላር ደረሰ”",
-        testimonial3: "“ኤሌና 3 ስራዋን ተወች!”",
+        testimonial2: "“ማይክ በዚህ ሳምንት 1,000 ዶላር ደረሰ”",
+        testimonial3: "“ኤሌና 9-5 ስራዋን ተወች!”",
         testimonial4: "“ዴቪድ የመጀመሪያ ክፍያውን አገኘ”",
         powered_by: "የተጎላበተው በ",
         rights: "መብቱ በህግ የተጠበቀ ነው። | ግላዊነት | ውሎች"
@@ -1170,6 +1201,7 @@
         nav_home: "Home",
         nav_videos: "Videos",
         more_info: "More Info",
+        close_more: "🔽 Close (ዝጋ)",
         users: "users",
         hero_title: "Make Your First",
         hero_subtitle: "I’m Nate – an online business coach who turned a simple app into a full‑time income stream. All the steps, rules, and tutorials are right here.",
@@ -1243,7 +1275,7 @@
         quiz_submit: "See My Results",
         quiz_response: "✅ You're a great fit! Nate will reach out with next steps.",
         testimonial1: "“Sarah earned $200 today”",
-        testimonial2: "“Mike just hit $100 this week”",
+        testimonial2: "“Mike just hit $1,000 this week”",
         testimonial3: "“Elena quit her 9‑5!”",
         testimonial4: "“David got his first payout”",
         powered_by: "Powered by",
@@ -1425,7 +1457,7 @@
       }
     });
 
-    // ---------- OPTIONAL CONTENT TOGGLE (with auto-scroll) ----------
+    // ---------- OPTIONAL CONTENT TOGGLE (no auto‑scroll) ----------
     const toggleBtn = document.getElementById('toggle-optional-btn');
     const optionalContent = document.getElementById('optional-content');
     const toggleIcon = toggleBtn.querySelector('i');
@@ -1434,14 +1466,20 @@
       if (optionalContent.classList.contains('expanded')) {
         toggleIcon.classList.remove('fa-chevron-down');
         toggleIcon.classList.add('fa-chevron-up');
-        // Smooth scroll to the optional content after a tiny delay to let the transition start
-        setTimeout(() => {
-          optionalContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }, 100);
       } else {
         toggleIcon.classList.remove('fa-chevron-up');
         toggleIcon.classList.add('fa-chevron-down');
       }
+    });
+
+    // ---------- CLOSE MORE BUTTON ----------
+    const closeMoreBtn = document.getElementById('close-more-btn');
+    closeMoreBtn.addEventListener('click', () => {
+      optionalContent.classList.remove('expanded');
+      toggleIcon.classList.remove('fa-chevron-up');
+      toggleIcon.classList.add('fa-chevron-down');
+      // Optional: scroll back to the hero
+      document.getElementById('home').scrollIntoView({ behavior: 'smooth' });
     });
 
     // Initialize Amharic
